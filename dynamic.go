@@ -6,6 +6,12 @@ import (
 	"github.com/armon/go-metrics"
 )
 
+// Go's atomic.Value is kind of nasty in that it panics if the
+// concrete type of the value being Stored/Loaded changes. In
+// this case the underlying value type SHOULD change. I could
+// have used some unsafe pointer code or taken this approach
+// which is to embed the interface I care about in a struct
+// and Store/Load that struct type.
 type dynamicValue struct {
 	metrics.MetricSink
 }
